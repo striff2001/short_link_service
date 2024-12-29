@@ -4,17 +4,16 @@ public class Main {
     public static void main(String[] args) {
         urlShortener urlShortener = new urlShortener();
         Scanner scanner = new Scanner(System.in);
-        boolean loop = true;
 
-        while (loop) {
-        System.out.println("Choose an option:");
-        System.out.println("1. Shorten a URL");
-        System.out.println("2. Retrieve original URL");
-        System.out.println("3. Exit");
-        System.out.print("Enter your choice: ");
+        while (true) {
+            System.out.println("Choose an option:");
+            System.out.println("1. Shorten a URL");
+            System.out.println("2. Retrieve original URL");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
 
-        int choice = scanner.nextInt();
-        scanner.nextLine();
+            int choice = scanner.nextInt();
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -27,12 +26,11 @@ public class Main {
                     System.out.print("Enter the shortened URL: ");
                     String inputShortUrl = scanner.nextLine();
                     String retrievedUrl = urlShortener.getOriginalUrl(inputShortUrl);
-                    if (!"URL not found".equals(retrievedUrl)) {
+                    if (!retrievedUrl.startsWith("URL is blocked") && !"URL not found".equals(retrievedUrl)) {
                         System.out.println("Opening original URL in browser...");
                         urlShortener.openInBrowser(retrievedUrl);
-                    } else {
-                        System.out.println("Original URL: " + retrievedUrl);
                     }
+                    System.out.println("Original URL: " + retrievedUrl);
                     break;
                 case 3:
                     System.out.println("Exiting...");
