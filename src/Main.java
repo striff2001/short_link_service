@@ -26,7 +26,9 @@ public class Main {
                     System.out.print("Enter the shortened URL: ");
                     String inputShortUrl = scanner.nextLine();
                     String retrievedUrl = urlShortener.getOriginalUrl(inputShortUrl);
-                    if (!retrievedUrl.startsWith("URL is blocked") && !"URL not found".equals(retrievedUrl)) {
+                    if (!retrievedUrl.startsWith("URL is blocked") &&
+                            !retrievedUrl.startsWith("URL has expired") &&
+                            !"URL not found".equals(retrievedUrl)) {
                         System.out.println("Opening original URL in browser...");
                         urlShortener.openInBrowser(retrievedUrl);
                     }
