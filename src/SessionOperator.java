@@ -44,6 +44,7 @@ public class SessionOperator {
         try {
             List<String> linkLine = this.loadLink(this.path, session.userID, session.link);
 
+            checkListFormat(linkLine);
             // Проверка ссылки на лимиты
             checkClicks(linkLine);
             checkLinkLifetime(linkLine);
@@ -68,6 +69,8 @@ public class SessionOperator {
             String url = session.getBasicURL(session);
             if (!url.startsWith("Ошибка")) {
                 session.openInBrowser(url);
+            } else {
+                System.out.println(url);
             }
     }
 
@@ -79,7 +82,7 @@ public class SessionOperator {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] elements = line.split(",");
-                if (elements.length >= 4 && elements[0].trim().equals(userID) && elements[1].trim().equals(link)) {
+                if (elements[0].trim().equals(userID) && elements[1].trim().equals(link)) {
                     try {
                         int value = Integer.parseInt(elements[4].trim());
                         elements[4] = String.valueOf(value + 1); // Увеличиваем значение на единицу
@@ -128,7 +131,7 @@ public class SessionOperator {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] elements = line.split(",");
-                if (elements.length >= 4 && elements[0].trim().equals(userID) && elements[1].trim().equals(link)) {
+                if (elements[0].trim().equals(userID) && elements[1].trim().equals(link)) {
                     removed = true; // Помечаем строку как найденную
                     continue;       // Пропускаем добавление строки в список
                 }
@@ -165,7 +168,7 @@ public class SessionOperator {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] elements = line.split(",");
-                if (elements.length >= 4 && elements[0].trim().equals(userID) && elements[1].trim().equals(link)) {
+                if (elements[0].trim().equals(userID) && elements[1].trim().equals(link)) {
                     removed = true; // Помечаем строку как найденную
                     continue;       // Пропускаем добавление строки в список
                 }
@@ -212,6 +215,12 @@ public class SessionOperator {
 
         if (linkLifetime.isBefore(LocalDateTime.now())) {
             throw new CustomException("Время действия ссылки истекло");
+        }
+    }
+
+    private static void checkListFormat(List<String> line) throws CustomException {
+        if (line.size() != 6) {
+            throw new CustomException("Запись не найдена");
         }
     }
 

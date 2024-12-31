@@ -1,3 +1,5 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -24,4 +26,23 @@ public class User {
             System.err.println("Ошибка при сохранении в файл: " + e.getMessage());
         }
     }
+
+    public static boolean findUser(String userID) {
+        boolean found = false;
+        String path = "./resources/users.txt";
+        String line;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            while ((line = br.readLine()) != null) {
+                if (line.contains(userID)) {
+                    found = true;
+                    break;
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return found;
+    }
+
 }
