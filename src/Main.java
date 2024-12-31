@@ -2,21 +2,22 @@ import java.util.Scanner;
 import java.util.UUID;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SessionOperator.CustomException {
         User user1 = new User();
         user1.saveToFile();
         UUID id = user1.getUserID();
 
-        String URL = "https://chatgpt.com/c/67725d00-1720-8009-8ed3-ca94300df9e5";
+        String URL = "https://habr.com/ru/companies/otus/articles/552412/";
 
         String link = urlShortener.createLink(id, URL, 2);
         System.out.println(link);
 
-        SessionOperator session = new SessionOperator("e68eadab-11a2-40b3-b682-95b05946cb0f", "http://short.ly/N1FzodI");
-        String basicURL = session.getBasicURL(session);
-        System.out.println(basicURL);
-        session.redirectFromLinkToBasic(session);
-        session.addClick("e68eadab-11a2-40b3-b682-95b05946cb0f", "http://short.ly/N1FzodI");
+        SessionOperator session = new SessionOperator("3ae1c7e2-a218-4745-ba8f-d05399786a9f", "http://short.ly/handvPD");
+//        String basicURL = session.getBasicURL(session);
+//        System.out.println(basicURL);
+//        session.redirectFromLinkToBasic(session);
+        //session.addClick("11a26cf8-f002-4223-baf1-666834744728", "http://short.ly/im4r-FN");
+        session.deleteLink("3ae1c7e2-a218-4745-ba8f-d05399786a9f", "http://short.ly/handvPD");
 
 //        urlShortener urlShortener = new urlShortener();
 //        Scanner scanner = new Scanner(System.in);

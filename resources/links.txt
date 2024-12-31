@@ -12,7 +12,7 @@ da838724-9487-4ef9-9d9e-d23ebb25fa48,http://short.ly/OxQ-1uK,https://chatgpt.com
 d6bf2715-e9eb-4a09-8540-15f1cce0a502,http://short.ly/UIVOYL6,https://chatgpt.com/c/67725d00-1720-8009-8ed3-ca94300df9e5,2,0,2024-12-30T16:55:14.541441
 582f863b-36f5-4eda-938a-1629ee27b219,http://short.ly/5Akq3zW,https://chatgpt.com/c/67725d00-1720-8009-8ed3-ca94300df9e5,2,0,2024-12-30T16:57:01.454326900
 b25bcdfc-f793-4d08-beb3-ecddcd491c4e,http://short.ly/nmNWj2x,https://chatgpt.com/c/67725d00-1720-8009-8ed3-ca94300df9e5,2,0,2024-12-30T16:57:37.454846800
-e68eadab-11a2-40b3-b682-95b05946cb0f,http://short.ly/N1FzodI,https://chatgpt.com/c/67725d00-1720-8009-8ed3-ca94300df9e5,2,3,2024-12-30T16:59:08.966792200
+e68eadab-11a2-40b3-b682-95b05946cb0f,http://short.ly/N1FzodI,https://chatgpt.com/c/67725d00-1720-8009-8ed3-ca94300df9e5,2,4,2024-12-30T16:59:08.966792200
 5a6ebc4d-5f43-4ec1-9d13-380c39677887,http://short.ly/cskc5th,https://chatgpt.com/c/67725d00-1720-8009-8ed3-ca94300df9e5,2,1,2024-12-30T17:02:29.513893700
 3b03eba7-33cd-48ca-a97c-129b2588f419,http://short.ly/38NXlHQ,https://chatgpt.com/c/67725d00-1720-8009-8ed3-ca94300df9e5,2,0,2024-12-30T17:03:00.775751200
 828f31a7-5224-4e9c-bd00-490b3cc4be04,http://short.ly/jsufLXd,https://chatgpt.com/c/67725d00-1720-8009-8ed3-ca94300df9e5,2,0,2024-12-30T17:03:16.816152400
@@ -20,3 +20,13 @@ e68eadab-11a2-40b3-b682-95b05946cb0f,http://short.ly/N1FzodI,https://chatgpt.com
 c72796e8-0e2a-475f-9481-cd7e27637a99,http://short.ly/sV-Y1_Z,https://chatgpt.com/c/67725d00-1720-8009-8ed3-ca94300df9e5,2,0,2024-12-30T17:09:57.710734900
 8d5815a2-11d6-49c0-b714-0ec37b58b4f9,http://short.ly/zz_dF9B,https://chatgpt.com/c/67725d00-1720-8009-8ed3-ca94300df9e5,2,0,2024-12-30T17:10:12.444868700
 bf1d4850-33b2-4ed3-ac5a-c9ae17bdbd4f,http://short.ly/0l4UyZo,https://chatgpt.com/c/67725d00-1720-8009-8ed3-ca94300df9e5,2,0,2024-12-30T17:29:53.442235500
+949a4c64-fbdf-4b1d-b2a8-1e546f79998d,http://short.ly/UtSBEir,https://habr.com/ru/companies/otus/articles/552412/,2,0,2024-12-31T09:16:01.129133600
+43dd69e3-b755-49d0-9a49-c464015d6838,http://short.ly/sl1ZTeB,https://habr.com/ru/companies/otus/articles/552412/,2,0,2024-12-31T09:20:28.660685
+3ae88b2f-f0a6-4130-bd75-87bbb34a0849,http://short.ly/t91OHub,https://habr.com/ru/companies/otus/articles/552412/,2,0,2024-12-31T09:22:15.965973300
+5acaa111-448b-481c-98e5-58478cdca5d5,http://short.ly/H2RNXUR,https://habr.com/ru/companies/otus/articles/552412/,2,0,2024-12-31T09:23:42.477410
+a76ab26d-5483-4387-b80d-c7e4d76d85f3,http://short.ly/rTZ-CIP,https://habr.com/ru/companies/otus/articles/552412/,2,0,2024-12-31T09:24:24.124967100
+6d01bcb2-b647-4feb-a85d-01d730bac1a8,http://short.ly/KTwUe4W,https://habr.com/ru/companies/otus/articles/552412/,2,0,2024-12-31T09:32:01.925482900
+d292fce0-d19d-4d81-a71c-6bf0c4f23d02,http://short.ly/_TQJub2,https://habr.com/ru/companies/otus/articles/552412/,2,1,2024-12-31T09:33:13.988807700
+5e4c914d-6ba5-4ea8-974f-1aaa2e9a7a38,http://short.ly/TMXGHGF,https://habr.com/ru/companies/otus/articles/552412/,2,0,2024-12-31T09:45:21.221496500
+1a14165d-9d8a-420a-ae1a-69cae444cf4d,http://short.ly/U4GwRT3,https://habr.com/ru/companies/otus/articles/552412/,2,0,2024-12-31T10:01:45.784883400,
+3a714903-25a5-4855-9f38-89154c3688d6,http://short.ly/q8N2WZ4,https://habr.com/ru/companies/otus/articles/552412/,2,0,2024-12-31T10:06:11.845554500,

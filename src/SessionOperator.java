@@ -2,9 +2,9 @@ import javax.swing.plaf.multi.MultiSeparatorUI;
 import java.awt.*;
 import java.io.*;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.List;
 
 /* Класс который выполняет действия с определенной ссылкой определенного пользователя
@@ -25,10 +25,6 @@ public class SessionOperator {
         this.link = link;
     }
 
-    // ЗАПИХНУТЬ ДВЕ ПРОВЕРКИ НА ЛИМИТ КЛИКОВ И НА ВРЕМЯ ЖИЗНИ.
-    // ЕСЛИ ПРОВЕРКИ НЕ ПРОХОДЯТ -> ВЫВОДИМ СООБЩЕНИЕ, ЕСЛИ ОК ТО ОСТАВЛЯЕМ КАК ЕСТЬ СЕЙЧАС
-    // НАПИСАТЬ ДВА МЕТОДА, КОТОРЫЕ ВЫКИНУТ ЭКСЕПШЕН ЕСЛИ ПРОВЕРКА НЕ ПРОЙДЕТ И ИСПОЛЬЗОВАТЬ ДАННЫЕ МЕТОДЫ КАК ПРОВЕРКИ
-    // ЕСли вылетет эксепшен, то сделать метод по удалению ссылки из файла
     public static List<String> loadLink(String path, String userID, String link) {
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             String line;
@@ -45,10 +41,18 @@ public class SessionOperator {
     }
 
     public String getBasicURL(SessionOperator session) {
-        List<String> linkLine = this.loadLink(this.path, session.userID, session.link);
-        //checkClicks(linkLine);
-        String basicURL = linkLine.get(2);
-        return basicURL;
+        try {
+            List<String> linkLine = this.loadLink(this.path, session.userID, session.link);
+
+            // Проверка ссылки на лимиты
+            checkClicks(linkLine);
+            checkLinkLifetime(linkLine);
+
+            String basicURL = linkLine.get(2);
+            return basicURL;
+        } catch (CustomException e) {
+            return "Ошибка: " + e.getMessage();
+        }
     }
 
     public void openInBrowser(String url) {
@@ -61,8 +65,10 @@ public class SessionOperator {
     }
 
     public void redirectFromLinkToBasic(SessionOperator session) {
-        String url = session.getBasicURL(session);
-        session.openInBrowser(url);
+            String url = session.getBasicURL(session);
+            if (!url.startsWith("Ошибка")) {
+                session.openInBrowser(url);
+            }
     }
 
     public boolean addClick(String userID, String link) {
@@ -113,9 +119,99 @@ public class SessionOperator {
 //        }
 //    }
 
+    public void deleteLink(String userID, String link) {
+        List<String> lines = new ArrayList<>();
+        boolean removed = false;
+
+        // Чтение файла и поиск строки
+        try (BufferedReader reader = new BufferedReader(new FileReader(this.path))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] elements = line.split(",");
+                if (elements.length >= 4 && elements[0].trim().equals(userID) && elements[1].trim().equals(link)) {
+                    removed = true; // Помечаем строку как найденную
+                    continue;       // Пропускаем добавление строки в список
+                }
+                lines.add(line); // Добавляем только строки, которые не удаляются
+            }
+        } catch (IOException e) {
+            System.err.println("Ошибка при чтении файла: " + e.getMessage());
+        }
+
+        // Перезапись файла без удалённой строки
+        if (removed) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(this.path))) {
+                for (String updatedLine : lines) {
+                    writer.write(updatedLine);
+                    writer.newLine();
+                }
+                System.out.println("Ссылка удалена!");
+            } catch (IOException e) {
+                System.err.println("Ошибка при записи в файл: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Строка с указанными параметрами не найдена.");
+        }
+
+        //return "";
+    }
+
+    public boolean removeLine(String userID, String link) {
+        List<String> lines = new ArrayList<>();
+        boolean removed = false;
+
+        // Чтение файла и поиск строки
+        try (BufferedReader reader = new BufferedReader(new FileReader(this.path))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] elements = line.split(",");
+                if (elements.length >= 4 && elements[0].trim().equals(userID) && elements[1].trim().equals(link)) {
+                    removed = true; // Помечаем строку как найденную
+                    continue;       // Пропускаем добавление строки в список
+                }
+                lines.add(line); // Добавляем только строки, которые не удаляются
+            }
+        } catch (IOException e) {
+            System.err.println("Ошибка при чтении файла: " + e.getMessage());
+            return false;
+        }
+
+        // Перезапись файла без удалённой строки
+        if (removed) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(this.path))) {
+                for (String updatedLine : lines) {
+                    writer.write(updatedLine);
+                    writer.newLine();
+                }
+            } catch (IOException e) {
+                System.err.println("Ошибка при записи в файл: " + e.getMessage());
+                return false;
+            }
+        } else {
+            System.out.println("Строка с указанными параметрами не найдена.");
+        }
+
+        return removed;
+    }
+
     private static void checkClicks(List<String> line) throws CustomException {
         if (Integer.parseInt(line.get(4)) > Integer.parseInt(line.get(3))) {
             throw new CustomException("Превышено число кликов");
+        }
+    }
+
+    private static void checkLinkLifetime(List<String> line) throws CustomException {
+        int timeDiff = SessionOperator.loadConfig();
+
+        // create a formatter
+        DateTimeFormatter formatter
+                = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+
+        LocalDateTime linkLifetime = LocalDateTime.parse(line.get(5), formatter);
+        linkLifetime = linkLifetime.plusMinutes(timeDiff); // Перевести параметр интервала жизни в конфиг файл
+
+        if (linkLifetime.isBefore(LocalDateTime.now())) {
+            throw new CustomException("Время действия ссылки истекло");
         }
     }
 
@@ -124,6 +220,23 @@ public class SessionOperator {
         public CustomException(String message) {
             super(message);
         }
+    }
+
+    private static Integer loadConfig() {
+       // int maxClicks;
+        int linkLifetimeMinutes;
+
+        Properties properties = new Properties();
+        try (FileInputStream input = new FileInputStream("config.properties")) {
+            properties.load(input);
+            //maxClicks = Integer.parseInt(properties.getProperty("max_clicks", "5"));
+            linkLifetimeMinutes = Integer.parseInt(properties.getProperty("link_lifetime_minutes", "10"));
+        } catch (IOException e) {
+            System.out.println("Failed to load config: " + e.getMessage());
+          //  maxClicks = 5; // Default value if config fails
+            linkLifetimeMinutes = 10; // Default value if config fails
+        }
+        return linkLifetimeMinutes;
     }
 
 
