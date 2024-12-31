@@ -1,14 +1,16 @@
 import java.util.Scanner;
 import java.util.UUID;
-
+/*
+Класс для работы с пользователем в консоли.
+Представляет разные сценарии использования программы для пользователя
+и обращается к соответствующим классам и методам для обработки данных.
+ */
 public class App {
     public static void startApp() {
         Scanner scanner = new Scanner(System.in);
         String userID = "";
         String link = "";
         boolean auth = false;
-        //UUID id = null;
-
 
         while (!auth) {
             System.out.println("""
@@ -16,7 +18,6 @@ public class App {
                     1. Зарегистрирован
                     2. Нет, я в первый раз
                     3. Завершить работу
-                    (введите цифру)
                     """);
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -64,7 +65,8 @@ public class App {
                     1. Создать короткую ссылку.
                     2. Перейти на страницу по короткой ссылке.
                     3. Удалить короткую ссылку.
-                    4. Завершить работу.
+                    4. Изменить лимит переходов по ссылке
+                    5. Завершить работу.
                     """);
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -76,7 +78,7 @@ public class App {
                     System.out.println("Введите лимит переходов по ссылке: ");
                     int maxClicks = scanner.nextInt();
 
-                    link = urlShortener.createLink(UUID.fromString(userID), url, maxClicks);
+                    link = UrlShortener.createLink(UUID.fromString(userID), url, maxClicks);
                     System.out.println("Ваша короткая ссылка: " + link);
                     break;
                 case 2:
@@ -84,17 +86,27 @@ public class App {
                     link = scanner.nextLine();
 
                     SessionOperator redirectSession = new SessionOperator(String.valueOf(userID), link);
-                    redirectSession.redirectFromLinkToBasic(redirectSession);
-                    redirectSession.addClick(String.valueOf(userID), link);
+                    boolean res =  redirectSession.redirectFromLinkToBasic(redirectSession);
+                    if (res) {
+                        redirectSession.addClick(redirectSession.userID, redirectSession.link);
+                    }
                     break;
                 case 3:
                     System.out.println("Введите короткую ссылку: ");
                     link = scanner.nextLine();
 
                     SessionOperator deleteSession = new SessionOperator(String.valueOf(userID), link);
-                    deleteSession.deleteLink(String.valueOf(userID), link);
+                    deleteSession.deleteLink(deleteSession.userID, deleteSession.link);
                     break;
                 case 4:
+                    System.out.println("Введите короткую ссылку: ");
+                    link = scanner.nextLine();
+                    System.out.println("Введите новый лимит переходов для ссылки: ");
+                    int newMaxClicks = scanner.nextInt();
+                    SessionOperator clicksSetterSession = new SessionOperator(String.valueOf(userID), link);
+                    clicksSetterSession.setNewMaxClicks(clicksSetterSession.userID, clicksSetterSession.link, newMaxClicks);
+                    break;
+                case 5:
                     System.out.println("Завершение работы...");
                     scanner.close();
                     return;

@@ -4,7 +4,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.UUID;
-
+/*
+Класс представляющий сущность пользователя.
+    userID : UUID - идентификатор пользователя
+    userCreationDT : LocalDateTime - временная метка создания нового пользователя
+ */
 public class User {
     UUID userID;
     LocalDateTime userCreationDT;

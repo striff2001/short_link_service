@@ -1,7 +1,12 @@
-import java.io.FileWriter;
-import java.io.IOException;
 import java.time.LocalDateTime;
-
+/*
+Класс представляющий сущность короткой ссылки
+    url : String - короткая ссылка
+    originalURL : String - полная ссылка на сайт которая кодируется короткой ссылкой
+    creationDateTime : LocalDateTime - временная метка создания короткой ссылки
+    maxClicks : int - лимит переходов по короткой ссылке
+    currentClicks : int - текущее количество переходов по короткой ссылке
+ */
 public class ShortLink {
 
     private final String url;
@@ -49,20 +54,4 @@ public class ShortLink {
     public LocalDateTime getCreationDateTime() {
         return creationDateTime;
     }
-
-
-
-//    public void saveToFile() {
-//        String path = "./resources/links.txt";
-//        try (FileWriter writer = new FileWriter(path, true)) {
-//            writer.write(this.toCSV() + System.lineSeparator());
-//        } catch (IOException e) {
-//            System.err.println("Ошибка при сохранении в файл: " + e.getMessage());
-//        }
-//    }
-//
-//    // Метод для преобразования объекта в строку формата CSV
-//    private String toCSV() {
-//        return url + "," + originalURL + "," + maxClicks + "," + currentClicks + "," + creationDateTime;
-//    }
 }
